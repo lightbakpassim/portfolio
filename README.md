@@ -1,4 +1,4 @@
-# 🌌 Cyber-Portfolio | BAKPASSIM Pouwedeo Light
+#  Cyber-Portfolio | BAKPASSIM Pouwedeo Light
 
 Bienvenue sur le dépôt de mon portfolio professionnel. Il s'agit d'un site web d'une seule page (*Single Page Application*) conçu avec une esthétique moderne, épurée et orientée "cyber-tech" (mode sombre avec des accents néon cyan et green). 
 
