@@ -10,7 +10,7 @@
 :root {
   --bg:#060810;--bg1:#090c14;--bg2:#0d1220;--card:#111827;
   --border:#1a2540;--border2:#243355;
-  --cyan:#00e5ff;--green:#00ff88;--gold:#ffc93c;--purple:#a855f7;
+  --cyan:#00e5ff;--cyan2:#5ef8ff;--green:#00ff88;--gold:#ffc93c;--purple:#a855f7;
   --text:#e8f0fc;--muted:#5a7299;--muted2:#8aaac8;
   --f:'Instrument Sans',sans-serif;--fh:'Syne',sans-serif;--fm:'JetBrains Mono',monospace;
   --r:12px;
@@ -20,10 +20,17 @@ html{scroll-behavior:smooth}
 body{background:var(--bg);color:var(--text);font-family:var(--f);font-size:16px;line-height:1.6;overflow-x:hidden}
 body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");pointer-events:none;z-index:0;opacity:.6}
 body::after{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(0,229,255,.02) 1px,transparent 1px),linear-gradient(90deg,rgba(0,229,255,.02) 1px,transparent 1px);background-size:60px 60px;pointer-events:none;z-index:0}
+.container{max-width:1140px;margin:0 auto;width:100%;position:relative;z-index:1}
+section{position:relative;z-index:1}
+.glow{position:fixed;width:420px;height:420px;border-radius:50%;pointer-events:none;z-index:0;background:radial-gradient(circle,rgba(0,229,255,.09),transparent 68%);transform:translate(-50%,-50%)}
 
 /* NAV */
 nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 6%;height:65px;background:rgba(6,8,16,.88);backdrop-filter:blur(20px);border-bottom:1px solid var(--border)}
-.nav-logo{font-family:var(--fh);font-weight:900;font-size:1rem;letter-spacing:-.02em;cursor:pointer;display:flex;align-items:center;gap:.4rem}
+.nav-logo{font-family:var(--fh);font-weight:900;font-size:1rem;letter-spacing:-.02em;cursor:pointer;display:flex;align-items:center;gap:.4rem;text-decoration:none;color:inherit}
+.nav-toggle{display:none;width:42px;height:42px;border-radius:8px;border:1px solid var(--border2);background:transparent;color:var(--text);cursor:pointer;flex-direction:column;align-items:center;justify-content:center;gap:5px}
+.nav-toggle span{display:block;width:16px;height:1.5px;background:currentColor}
+.nav-links a.active{color:var(--cyan)}
+.nav-links a.active::after{transform:scaleX(1)}
 .nav-logo .br{color:var(--cyan);font-family:var(--fm)}
 .nav-links{display:flex;gap:1.75rem;list-style:none}
 .nav-links a{font-size:.75rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);text-decoration:none;transition:color .2s;position:relative;padding-bottom:2px}
@@ -70,7 +77,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
 .section-sub{color:var(--muted2);font-size:1rem;max-width:500px;line-height:1.7}
 
 /* ABOUT */
-#about{padding:110px 0;background:var(--bg1)}
+#about{padding:110px 6%;background:var(--bg1)}
 .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center}
 .about-title{font-family:var(--fh);font-size:clamp(1.8rem,3vw,2.6rem);font-weight:800;letter-spacing:-.03em;margin-bottom:1.25rem;line-height:1.15}
 .about-text{color:var(--muted2);line-height:1.8;margin-bottom:1.25rem;font-size:.97rem}
@@ -86,7 +93,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
 .badge-green{background:rgba(0,255,136,.1);color:var(--green)}
 
 /* SKILLS */
-#skills{padding:110px 0}
+#skills{padding:110px 6%}
 .skills-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem;margin-top:3.5rem}
 .skill-cat{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:1.75rem;transition:border-color .25s,transform .25s;position:relative;overflow:hidden}
 .skill-cat::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 0% 0%,rgba(0,229,255,.05),transparent 55%);opacity:0;transition:opacity .3s}
@@ -100,10 +107,12 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
 .bar{height:100%;border-radius:2px;background:linear-gradient(90deg,var(--cyan),var(--cyan2))}
 
 /* PROJECTS */
-#projects{padding:110px 0;background:var(--bg1)}
+#projects{padding:110px 6%;background:var(--bg1)}
 .projects-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1.5rem;margin-top:3.5rem}
 .project-card{background:var(--card);border:1px solid var(--border);border-radius:16px;overflow:hidden;transition:transform .25s,box-shadow .25s,border-color .25s}
 .project-card:hover{transform:translateY(-5px);box-shadow:0 18px 50px rgba(0,0,0,.55);border-color:rgba(0,229,255,.3)}
+.project-card.upcoming{border-style:dashed;opacity:.92}
+.project-card.upcoming:hover{opacity:1}
 .project-top{padding:1.75rem 1.75rem 1.25rem;border-bottom:1px solid var(--border)}
 .project-num{font-family:var(--fm);font-size:.65rem;color:var(--muted);letter-spacing:.1em;margin-bottom:.75rem}
 .project-title{font-family:var(--fh);font-size:1.15rem;font-weight:700;margin-bottom:.5rem}
@@ -115,9 +124,10 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
 .project-link:hover{gap:.7rem}
 
 /* PRICING */
-#pricing{padding:110px 0}
+#pricing{padding:110px 6%}
 .pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem;margin-top:3.5rem}
-.price-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:2rem;position:relative;transition:transform .25s,border-color .25s}
+.price-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:2rem;position:relative;transition:transform .25s,border-color .25s;display:flex;flex-direction:column}
+.price-features{flex:1}
 .price-card:hover{transform:translateY(-4px)}
 .price-card.featured{border-color:var(--cyan);background:linear-gradient(135deg,var(--card),rgba(0,229,255,.03))}
 .featured-badge{position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:var(--cyan);color:var(--bg);font-size:.68rem;font-weight:700;padding:.25rem .9rem;border-radius:100px;letter-spacing:.08em;white-space:nowrap}
@@ -133,7 +143,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
 .price-btn-cyan{background:var(--cyan);color:var(--bg);box-shadow:0 0 20px rgba(0,229,255,.3)}.price-btn-cyan:hover{box-shadow:0 6px 28px rgba(0,229,255,.5);transform:translateY(-1px)}
 
 /* CONTACT */
-#contact{padding:110px 0;background:var(--bg1)}
+#contact{padding:110px 6%;background:var(--bg1)}
 .contact-grid{display:grid;grid-template-columns:1fr 1.2fr;gap:4rem;align-items:start}
 .contact-title{font-family:var(--fh);font-size:clamp(1.8rem,3vw,2.4rem);font-weight:800;letter-spacing:-.03em;margin-bottom:1rem}
 .contact-desc{color:var(--muted2);line-height:1.75;margin-bottom:2rem}
@@ -144,7 +154,8 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
 .ch-info strong{display:block;font-size:.88rem;font-weight:600}
 .ch-info span{font-size:.78rem;color:var(--muted2)}
 .contact-form{background:var(--card);border:1px solid var(--border2);border-radius:20px;padding:2.25rem}
-.form-title{font-family:var(--fh);font-size:1.1rem;font-weight:700;margin-bottom:1.75rem}
+.form-title{font-family:var(--fh);font-size:1.1rem;font-weight:700;margin-bottom:.4rem}
+.form-note{font-size:.82rem;color:var(--muted2);min-height:1.25rem;margin:0 0 1.1rem}
 .fg{display:flex;flex-direction:column;gap:.45rem;margin-bottom:1rem}
 .fl{font-size:.72rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
 .fi{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:.7rem .95rem;color:var(--text);font-family:var(--f);font-size:.9rem;outline:none;transition:border-color .2s,box-shadow .2s;width:100%}
@@ -171,11 +182,20 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:50px 6% 
   .pricing-grid{grid-template-columns:1fr}
 }
 @media(max-width:768px){
-  .nav-links{display:none}
+  .nav-toggle{display:flex}
+  .nav-links{display:none;position:absolute;top:65px;left:0;right:0;flex-direction:column;gap:0;background:rgba(6,8,16,.96);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:.4rem 6% 1rem}
+  .nav-links.open{display:flex}
+  .nav-links a{padding:.85rem 0}
   .projects-grid{grid-template-columns:1fr}
   .skills-grid{grid-template-columns:1fr}
   .frow{grid-template-columns:1fr}
   .hero-stats{gap:1.5rem}
+  .glow{display:none}
+}
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  html{scroll-behavior:auto}
+  .fade-in{opacity:1;transform:none}
 }
 
 /* ANIMATIONS */
@@ -187,8 +207,11 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:50px 6% 
 
 <!-- NAV -->
 <nav>
-  <div class="nav-logo"><span class="br">{</span>Light<span class="br">}</span></div>
-  <ul class="nav-links">
+  <a href="#hero" class="nav-logo"><span class="br">{</span>Light<span class="br">}</span></a>
+  <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-links" aria-label="Ouvrir le menu">
+    <span></span><span></span><span></span>
+  </button>
+  <ul class="nav-links" id="nav-links">
     <li><a href="#about">À propos</a></li>
     <li><a href="#skills">Compétences</a></li>
     <li><a href="#projects">Projets</a></li>
@@ -216,9 +239,9 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:50px 6% 
         <a href="#contact" class="btn btn-outline">Me contacter</a>
       </div>
       <div class="hero-stats">
-        <div class="stat"><strong>2<span>+</span></strong><small>Projets réalisés</small></div>
+        <div class="stat"><strong>4<span>+</span></strong><small>Projets réalisés</small></div>
         <div class="stat"><strong>100<span>%</span></strong><small>Satisfaction client</small></div>
-        <div class="stat"><strong>3<span>+</span></strong><small>Technologies maîtrisées</small></div>
+        <div class="stat"><strong>10<span>+</span></strong><small>Technologies maîtrisées</small></div>
       </div>
     </div>
 
@@ -234,7 +257,7 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:50px 6% 
         <div>&nbsp;&nbsp;<span class="cs">nom</span>: <span class="cn">"BAKPASSIM Light"</span>,</div>
         <div>&nbsp;&nbsp;<span class="cs">role</span>: <span class="cn">"Full Stack Dev"</span>,</div>
         <div>&nbsp;&nbsp;<span class="cs">localisation</span>: <span class="cn">"Lomé 🇹🇬"</span>,</div>
-        <div>&nbsp;&nbsp;<span class="cs">stack</span>: [<span class="cn">"Vue","Nuxt","Python", "Java"</span>],</div>
+        <div>&nbsp;&nbsp;<span class="cs">stack</span>: [<span class="cn">"Vue","Nuxt",".NET","Python"</span>],</div>
         <div>&nbsp;&nbsp;<span class="cs">disponible</span>: <span class="cv">true</span></div>
         <div>}</div>
       </div>
@@ -242,7 +265,9 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:50px 6% 
         <span class="chip">Vue.js</span>
         <span class="chip">Nuxt.js</span>
         <span class="chip">Python</span>
-        <span class="chip">Spring boot</span>
+        <span class="chip">.NET</span>
+        <span class="chip">Blazor</span>
+        <span class="chip">Spring Boot</span>
         <span class="chip">Git</span>
         <span class="chip">Netlify</span>
         <span class="chip">Ollama AI</span>
@@ -286,7 +311,7 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:50px 6% 
         </div>
         <div class="info-row">
           <span class="info-label">Stack</span>
-          <span class="info-value">Vue.js · Nuxt.js · Spring boot</span>
+          <span class="info-value">Vue.js · Blazor · .NET</span>
         </div>
         <div class="info-row">
           <span class="info-label">Langues</span>
@@ -331,7 +356,10 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:50px 6% 
         <span class="skill-ico">⚙️</span>
         <div class="skill-name">Backend & IA</div>
         <ul class="skill-list">
-          <li class="skill-item"><span class="sn">Spring boot</span><div class="bar-wrap"><div class="bar" style="width:75%"></div></div></li>
+          <li class="skill-item"><span class="sn">.NET / Blazor</span><div class="bar-wrap"><div class="bar" style="width:80%"></div></div></li>
+          <li class="skill-item"><span class="sn">PostgreSQL</span><div class="bar-wrap"><div class="bar" style="width:70%"></div></div></li>
+          <li class="skill-item"><span class="sn">Spring Boot</span><div class="bar-wrap"><div class="bar" style="width:75%"></div></div></li>
+          <li class="skill-item"><span class="sn">Python</span><div class="bar-wrap"><div class="bar" style="width:70%"></div></div></li>
           <li class="skill-item"><span class="sn">Ollama / LLM</span><div class="bar-wrap"><div class="bar" style="width:65%"></div></div></li>
           <li class="skill-item"><span class="sn">API REST</span><div class="bar-wrap"><div class="bar" style="width:60%"></div></div></li>
           <li class="skill-item"><span class="sn">Node.js</span><div class="bar-wrap"><div class="bar" style="width:55%"></div></div></li>
@@ -377,7 +405,7 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:50px 6% 
             <span class="ptag">Netlify</span>
             <span class="ptag">Git</span>
           </div>
-          <a href="https://cabinet-it.netlify.app/" class="project-link">Voir le projet →</a>
+          <a href="https://cabinet-it.netlify.app/" class="project-link" target="_blank" rel="noopener noreferrer">Voir le projet →</a>
         </div>
       </div>
 
@@ -401,29 +429,67 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:50px 6% 
 
       <div class="project-card fade-in">
         <div class="project-top">
-          <div class="project-num">03 — À venir</div>
-          <div class="project-title">Nouveau projet</div>
-          <p class="project-desc">Vous avez un projet web ? Site vitrine, application, boutique en ligne — contactez-moi et construisons quelque chose ensemble.</p>
+          <div class="project-num">03 — Prototype · 2026</div>
+          <div class="project-title">Récup' · ESIG Tech Arena</div>
+          <p class="project-desc">Tableau de campus pour objets trouvés, objets perdus et prêts entre étudiants. Prototype présenté au mini-challenge ESIG Tech Arena 2026 avec l'EQUIPE_7.</p>
         </div>
         <div class="project-body">
           <div class="project-tags">
-            <span class="ptag">Sur mesure</span>
-            <span class="ptag">Vue.js / Nuxt</span>
-            <span class="ptag">Responsive</span>
+            <span class="ptag">HTML</span>
+            <span class="ptag">Python</span>
+            <span class="ptag">Prototype</span>
+            <span class="ptag">ESIG 2026</span>
           </div>
-          <a href="#contact" class="project-link">Discutons-en →</a>
+          <a href="https://github.com/lightbakpassim/recup-equipe-7" class="project-link" target="_blank" rel="noopener noreferrer">Voir le dépôt →</a>
         </div>
       </div>
 
       <div class="project-card fade-in">
         <div class="project-top">
-          <div class="project-num">04 — À venir</div>
+          <div class="project-num">04 — Application</div>
           <div class="project-title">GESTION_ECOLE_PRO</div>
-          <p class="project-desc">En cours de développement. Revenez bientôt pour découvrir mes nouvelles réalisations.</p>
+          <p class="project-desc">Application de gestion scolaire terminée avec l'équipe NOVAMIND. Inscriptions, notes, bulletins, cartes étudiants, espaces parents et enseignants, et statistiques — portail Blazor et API .NET sur PostgreSQL.</p>
         </div>
         <div class="project-body">
           <div class="project-tags">
-            <span class="ptag">Bientôt</span>
+            <span class="ptag">C#</span>
+            <span class="ptag">.NET</span>
+            <span class="ptag">Blazor</span>
+            <span class="ptag">PostgreSQL</span>
+          </div>
+          <a href="#contact" class="project-link">Me contacter →</a>
+        </div>
+      </div>
+
+      <div class="project-card upcoming fade-in">
+        <div class="project-top">
+          <div class="project-num">05 — En cours</div>
+          <div class="project-title">TAMBIN</div>
+          <p class="project-desc">Marketplace circulaire qui relie ménages, collecteurs et industries pour valoriser les déchets organiques, plastiques et métaux. Abonnements, annonces et transactions.</p>
+        </div>
+        <div class="project-body">
+          <div class="project-tags">
+            <span class="ptag">Vue.js</span>
+            <span class="ptag">Spring Boot</span>
+            <span class="ptag">MySQL</span>
+            <span class="ptag">En cours</span>
+          </div>
+          <a href="#contact" class="project-link">Me contacter →</a>
+        </div>
+      </div>
+
+      <div class="project-card upcoming fade-in">
+        <div class="project-top">
+          <div class="project-num">06 — En cours</div>
+          <div class="project-title">Go Go Sika</div>
+          <p class="project-desc">Plateforme pour digitaliser l'approvisionnement des bars et maquis à Lomé : commandes, livraisons, stocks, fidélité et crédit, du détenteur national jusqu'au bar.</p>
+        </div>
+        <div class="project-body">
+          <div class="project-tags">
+            <span class="ptag">Next.js</span>
+            <span class="ptag">TypeScript</span>
+            <span class="ptag">Tailwind</span>
+            <span class="ptag">En cours</span>
           </div>
           <a href="#contact" class="project-link">Me contacter →</a>
         </div>
@@ -510,7 +576,7 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:50px 6% 
             <div class="ch-ico" style="background:rgba(0,255,136,.1)">📞</div>
             <div class="ch-info"><strong>Téléphone</strong><span>+228 97 77 58 82</span></div>
           </a>
-          <a href="https://wa.me/72406927" class="channel">
+          <a href="https://wa.me/22872406927" class="channel" target="_blank" rel="noopener noreferrer">
             <div class="ch-ico" style="background:rgba(37,211,102,.1)">💬</div>
             <div class="ch-info"><strong>WhatsApp</strong><span>Réponse rapide garantie</span></div>
           </a>
@@ -521,17 +587,18 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:50px 6% 
         </div>
       </div>
 
-      <div class="contact-form fade-in">
+      <form class="contact-form fade-in" id="contact-form">
         <div class="form-title">Envoyez-moi un message</div>
+        <p class="form-note" id="form-note">Le message s'ouvre dans votre application mail.</p>
         <div class="frow">
-          <div class="fg"><label class="fl">Prénom</label><input class="fi" type="text" placeholder="Kofi"/></div>
-          <div class="fg"><label class="fl">Nom</label><input class="fi" type="text" placeholder="Mensah"/></div>
+          <div class="fg"><label class="fl" for="prenom">Prénom</label><input class="fi" id="prenom" name="prenom" type="text" placeholder="Kofi" required/></div>
+          <div class="fg"><label class="fl" for="nom">Nom</label><input class="fi" id="nom" name="nom" type="text" placeholder="Mensah" required/></div>
         </div>
-        <div class="fg"><label class="fl">Email</label><input class="fi" type="email" placeholder="kofi@entreprise.tg"/></div>
-        <div class="fg"><label class="fl">Sujet</label><input class="fi" type="text" placeholder="Création de site web"/></div>
-        <div class="fg"><label class="fl">Message</label><textarea class="fi" placeholder="Décrivez votre projet..."></textarea></div>
-        <button class="btn btn-cyan" style="width:100%;justify-content:center;margin-top:.5rem">Envoyer le message ✓</button>
-      </div>
+        <div class="fg"><label class="fl" for="email">Email</label><input class="fi" id="email" name="email" type="email" placeholder="kofi@entreprise.tg" required/></div>
+        <div class="fg"><label class="fl" for="sujet">Sujet</label><input class="fi" id="sujet" name="sujet" type="text" placeholder="Création de site web" required/></div>
+        <div class="fg"><label class="fl" for="message">Message</label><textarea class="fi" id="message" name="message" placeholder="Décrivez votre projet..." required></textarea></div>
+        <button class="btn btn-cyan" type="submit" style="width:100%;justify-content:center;margin-top:.5rem">Envoyer le message ✓</button>
+      </form>
     </div>
   </div>
 </section>
@@ -540,11 +607,11 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:50px 6% 
 <footer>
   <div class="footer-inner">
     <div class="footer-logo"><span class="br">{</span>Light<span class="br">}</span></div>
-    <div class="footer-copy">© 2025 BAKPASSIM Pouwedeo Light · Lomé, Togo 🇹🇬</div>
+    <div class="footer-copy">© 2026 BAKPASSIM Pouwedeo Light · Lomé, Togo 🇹🇬</div>
     <div class="footer-socials">
-      <a href="https://www.linkedin.com/in/light-bakpassim-b17359335" class="social">in</a>
-      <a href="https://github.com/lightbakpassim" class="social">gh</a>
-      <a href="https://wa.me/72406927" class="social">wa</a>
+      <a href="https://www.linkedin.com/in/light-bakpassim-b17359335" class="social" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">in</a>
+      <a href="https://github.com/lightbakpassim" class="social" target="_blank" rel="noopener noreferrer" aria-label="GitHub">gh</a>
+      <a href="https://wa.me/22872406927" class="social" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">wa</a>
     </div>
   </div>
 </footer>
@@ -558,6 +625,31 @@ const observer = new IntersectionObserver((entries) => {
 }, { threshold: 0.1 });
 
 document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+const navToggle = document.querySelector('.nav-toggle');
+const navLinks = document.getElementById('nav-links');
+navToggle.addEventListener('click', () => {
+  const open = navLinks.classList.toggle('open');
+  navToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+  navToggle.setAttribute('aria-label', open ? 'Fermer le menu' : 'Ouvrir le menu');
+});
+navLinks.querySelectorAll('a').forEach(link => {
+  link.addEventListener('click', () => {
+    navLinks.classList.remove('open');
+    navToggle.setAttribute('aria-expanded', 'false');
+    navToggle.setAttribute('aria-label', 'Ouvrir le menu');
+  });
+});
+
+document.getElementById('contact-form').addEventListener('submit', (event) => {
+  event.preventDefault();
+  const data = new FormData(event.currentTarget);
+  const name = `${data.get('prenom')} ${data.get('nom')}`.trim();
+  const subject = data.get('sujet');
+  const body = `Nom : ${name}\nEmail : ${data.get('email')}\n\n${data.get('message')}`;
+  window.location.href = `mailto:lightbakpassim23@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  document.getElementById('form-note').textContent = 'Votre application mail s’ouvre avec le message prêt à envoyer.';
+});
 
 // Cursor glow
 const glow = document.createElement('div');
